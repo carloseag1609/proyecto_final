@@ -31,39 +31,21 @@ class ActorsListView extends StatelessWidget {
                   color: Colors.grey,
                 ),
                 itemBuilder: (BuildContext context, int index) {
-                  return Dismissible(
-                    key: UniqueKey(),
-                    background: Container(
-                      color: Colors.red,
+                  return ListTile(
+                    onTap: () => Navigator.pushNamed(
+                      context,
+                      'actor-movies',
+                      arguments: snapshot.data[index],
                     ),
-                    onDismissed: (DismissDirection direction) {
-                      print(snapshot.data[index].id);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Actor eliminado'),
-                          backgroundColor: Colors.indigo,
-                          duration: Duration(seconds: 1),
-                        ),
-                      );
-                    },
-                    child: GestureDetector(
-                      onTap: () => Navigator.pushNamed(
-                        context,
-                        'actor-movies',
-                        arguments: snapshot.data[index],
-                      ),
-                      child: ListTile(
-                        title: Text(snapshot.data[index].name),
-                        subtitle: Text(snapshot.data[index].alias),
-                        leading: const Icon(
-                          Icons.person,
-                          color: Colors.indigo,
-                        ),
-                        trailing: const Icon(
-                          Icons.arrow_right,
-                          color: Colors.indigo,
-                        ),
-                      ),
+                    title: Text(snapshot.data[index].name),
+                    subtitle: Text(snapshot.data[index].alias),
+                    leading: const Icon(
+                      Icons.person,
+                      color: Colors.indigo,
+                    ),
+                    trailing: const Icon(
+                      Icons.arrow_right,
+                      color: Colors.indigo,
                     ),
                   );
                 },
