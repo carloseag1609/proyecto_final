@@ -44,7 +44,7 @@ class ActorMoviesView extends StatelessWidget {
                   ),
                   onTap: () => Navigator.pushNamed(
                     context,
-                    'movie-details',
+                    'details',
                     arguments: snapshot.data![index],
                   ),
                 ),
