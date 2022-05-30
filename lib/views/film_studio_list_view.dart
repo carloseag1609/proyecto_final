@@ -29,45 +29,21 @@ class FilmStudioListView extends StatelessWidget {
                 ),
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Dismissible(
-                    key: UniqueKey(),
-                    background: Container(
-                      color: Colors.red,
+                  return ListTile(
+                    title: Text(snapshot.data[index].name),
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: FadeInImage(
+                        placeholder: const AssetImage('assets/no-image.jpg'),
+                        image: NetworkImage(snapshot.data[index].logo),
+                        fit: BoxFit.cover,
+                        width: 50,
+                        height: 80,
+                      ),
                     ),
-                    onDismissed: (DismissDirection direction) {
-                      print(snapshot.data[index].id);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Productoras eliminada'),
-                          backgroundColor: Colors.indigo,
-                          duration: Duration(seconds: 1),
-                        ),
-                      );
-                    },
-                    child: GestureDetector(
-                      onTap: () => Navigator.pushNamed(
-                        context,
-                        'film-studio-details',
-                        arguments: snapshot.data[index],
-                      ),
-                      child: ListTile(
-                        title: Text(snapshot.data[index].name),
-                        leading: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: FadeInImage(
-                            placeholder:
-                                const AssetImage('assets/no-image.jpg'),
-                            image: NetworkImage(snapshot.data[index].logo),
-                            fit: BoxFit.cover,
-                            width: 50,
-                            height: 80,
-                          ),
-                        ),
-                        trailing: const Icon(
-                          Icons.arrow_right,
-                          color: Colors.indigo,
-                        ),
-                      ),
+                    trailing: const Icon(
+                      Icons.arrow_right,
+                      color: Colors.indigo,
                     ),
                   );
                 },
