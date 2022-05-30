@@ -1,5 +1,9 @@
 # proyecto_final
 
+## Integrantes
+- Aguirre García Carlos Eduardo
+- Valencia Álvarez José Jesús
+
 A new Flutter project.
 
 ## Getting Started
