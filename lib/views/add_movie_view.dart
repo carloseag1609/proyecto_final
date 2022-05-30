@@ -240,20 +240,34 @@ class _AddMovieViewState extends State<AddMovieView> {
                           duration: Duration(seconds: 1),
                         ),
                       );
-                      Movie newMovie = Movie.fromJson(formValues);
-                      final movieId =
-                          await moviesProvider.insertMovie(newMovie);
-                      actors.isNotEmpty
-                          ? await moviesProvider.addActors(actors, movieId)
-                          : null;
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Película guardada'),
-                          backgroundColor: Colors.indigo,
-                          duration: Duration(seconds: 1),
-                        ),
-                      );
-                      Navigator.pop(context);
+                      final bool filmStudioTaken = await moviesProvider
+                          .filmStudioInUse(formValues['filmStudioId']);
+                      if (filmStudioTaken) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'La productora ya cuenta con una película',
+                            ),
+                            backgroundColor: Colors.amberAccent,
+                            duration: Duration(seconds: 1),
+                          ),
+                        );
+                      } else {
+                        Movie newMovie = Movie.fromJson(formValues);
+                        final movieId =
+                            await moviesProvider.insertMovie(newMovie);
+                        actors.isNotEmpty
+                            ? await moviesProvider.addActors(actors, movieId)
+                            : null;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Película guardada'),
+                            backgroundColor: Colors.indigo,
+                            duration: Duration(seconds: 1),
+                          ),
+                        );
+                        Navigator.pop(context);
+                      }
                     }
                   },
                   child: const SizedBox(

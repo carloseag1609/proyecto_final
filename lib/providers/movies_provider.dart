@@ -5,6 +5,14 @@ import 'package:proyecto_final/providers/db_provider.dart';
 class MoviesProvider extends ChangeNotifier {
   List<Movie> movies = [];
 
+  Future<bool> filmStudioInUse(int filmStudioId) async {
+    final db = await DBProvider.db.database;
+    final res = await db!.rawQuery('''
+        select * from movies where filmStudioId = $filmStudioId
+    ''');
+    return res.length >= 1;
+  }
+
   Future<int> insertMovie(Movie movie) async {
     final db = await DBProvider.db.database;
     final res = await db!.rawInsert('''
