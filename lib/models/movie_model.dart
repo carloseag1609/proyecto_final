@@ -1,23 +1,47 @@
-import 'dart:convert';
-
 class Movie {
   Movie({
     this.id,
     required this.title,
     required this.originalLanguage,
     required this.poster,
-    required this.actors,
-    required this.releaseDate,
-    required this.genres,
-    required this.duration,
+    required this.release,
+    required this.overview,
+    required this.filmStudioId,
+    required this.name,
+    required this.logo,
   });
 
   int? id;
   String title;
   String originalLanguage;
   String poster;
-  DateTime releaseDate;
-  List<String> actors;
-  List<String> genres;
-  String duration;
+  String overview;
+  String release;
+  int filmStudioId;
+  String? name = "";
+  String? logo = "";
+
+  factory Movie.fromJson(Map<String, dynamic> json) => Movie(
+        id: json['id'],
+        title: json['title'],
+        originalLanguage: json['originalLanguage'],
+        filmStudioId: json['filmStudioId'],
+        poster: json['poster'],
+        overview: json['overview'],
+        release: json['release'],
+        name: json['name'],
+        logo: json['logo'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "originalLanguage": originalLanguage,
+        "filmStudioId": filmStudioId,
+        "poster": poster,
+        "overview": overview,
+        "release": release,
+        "name": name,
+        "logo": logo,
+      };
 }

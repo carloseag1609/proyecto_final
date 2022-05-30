@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_final/providers/ui_provider.dart';
 import 'package:proyecto_final/views/film_studio_list_view.dart';
-// import 'package:provider/provider.dart';
-// import 'package:proyecto_final/providers/ui_provider.dart';
 import 'package:proyecto_final/views/movies_list_view.dart';
 import 'package:proyecto_final/widgets/custom_bottom_navbar.dart';
-// import 'package:proyecto_final/widgets/custom_bottom_navbar.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -25,7 +22,7 @@ class HomeView extends StatelessWidget {
         ),
         elevation: 5,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

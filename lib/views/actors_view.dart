@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:proyecto_final/providers/film_studios_provider.dart';
+import 'package:proyecto_final/providers/actors_provider.dart';
 import 'package:proyecto_final/widgets/fab.dart';
 
 import '../widgets/custom_bottom_navbar.dart';
 
-class FilmStudioListView extends StatelessWidget {
-  const FilmStudioListView({Key? key}) : super(key: key);
+class ActorsListView extends StatelessWidget {
+  ActorsListView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final filmStudiosProvider = Provider.of<FilmStudiosProvider>(context);
+    final size = MediaQuery.of(context).size;
+    final textTheme = Theme.of(context).textTheme;
+    final actorsProvider = Provider.of<ActorsProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Productoras'),
+        title: const Text('Actores'),
         elevation: 0,
       ),
       body: Container(
         margin: const EdgeInsets.only(top: 10),
         child: FutureBuilder(
           initialData: const [],
-          future: filmStudiosProvider.getAllFilmStudios(),
+          future: actorsProvider.getAllActors(),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               return ListView.separated(
+                itemCount: snapshot.data.length,
                 separatorBuilder: (context, index) => const Divider(
                   color: Colors.grey,
                 ),
-                itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Dismissible(
                     key: UniqueKey(),
@@ -38,7 +40,7 @@ class FilmStudioListView extends StatelessWidget {
                       print(snapshot.data[index].id);
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('Productoras eliminada'),
+                          content: Text('Actor eliminado'),
                           backgroundColor: Colors.indigo,
                           duration: Duration(seconds: 1),
                         ),
@@ -47,21 +49,15 @@ class FilmStudioListView extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () => Navigator.pushNamed(
                         context,
-                        'film-studio-details',
+                        'actor-movies',
                         arguments: snapshot.data[index],
                       ),
                       child: ListTile(
                         title: Text(snapshot.data[index].name),
-                        leading: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: FadeInImage(
-                            placeholder:
-                                const AssetImage('assets/no-image.jpg'),
-                            image: NetworkImage(snapshot.data[index].logo),
-                            fit: BoxFit.cover,
-                            width: 50,
-                            height: 80,
-                          ),
+                        subtitle: Text(snapshot.data[index].alias),
+                        leading: const Icon(
+                          Icons.person,
+                          color: Colors.indigo,
                         ),
                         trailing: const Icon(
                           Icons.arrow_right,
@@ -80,7 +76,7 @@ class FilmStudioListView extends StatelessWidget {
       ),
       bottomNavigationBar: const CustomBottomNavbar(),
       floatingActionButton: Fab(onPressed: () {
-        Navigator.pushNamed(context, 'add-film-studios');
+        Navigator.pushNamed(context, 'add-actor');
       }),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
